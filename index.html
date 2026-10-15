@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Hot Dog Sabor de Rua • Cardápio</title>
+  
+  <!-- Fontes do Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Link para o arquivo CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Estilo para garantir o círculo perfeito e fundo transparente -->
+  <style>
+    .logo {
+      width: 120px; /* Tamanho do círculo (ajuste se precisar) */
+      height: 120px;
+      border-radius: 50%; /* Cria o formato circular */
+      overflow: hidden; /* Impede que a imagem vaze para fora do círculo */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px auto; /* Centraliza horizontalmente e dá espaço abaixo */
+      background: transparent; /* Fundo transparente no container */
+    }
+
+    .logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* Faz a imagem caber inteira no círculo sem cortar ou distorcer */
+      display: block;
+      background: transparent; /* Garante que a imagem não tenha fundo branco */
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <!-- Container circular da logo -->
+  <div class="logo">
+    <img 
+      src="img/logo-ofc.png" 
+      alt="Logo Hot Dog Sabor de Rua" 
+      class="logo-img"
+      onerror="this.src='https://placehold.co/120x120/transparent/ffffff?text=LOGO';"
+    >
+  </div>
+  
+  <h1 class="brush">HOT DOG</h1>
+  <div class="sub">Sabor de Rua</div>
+  <div class="tag brush">O melhor hot dog da região!</div>
+</header>
+
+<main>
+  <div class="title brush">Cardápio</div>
+  <div id="menu"></div>
+  <!-- Instagram agora é um link clicável para facilitar o acesso dos clientes -->
+  <p class="contact">Do tradicional ao gourmet, você escolhe a sua melhor opção!<br>
+  Instagram: <a href="https://instagram.com/Hotdog_saborderua" target="_blank" style="color: inherit; text-decoration: underline;">@Hotdog_saborderua</a></p>
+</main>
+
+<!-- Botão flutuante do carrinho -->
+<button class="fab" id="fab"><span id="fabN">0 itens</span><span>Ver pedido • <b id="fabT"></b></span></button>
+
+<!-- Modais (Janelas que abrem) -->
+<div class="ov" id="ovItem"><div class="sheet" id="sheetItem"></div></div>
+<div class="ov" id="ovCart"><div class="sheet" id="sheetCart"></div></div>
+
+<!-- Link para o arquivo JavaScript -->
+<script src="js/script.js"></script>
+</body>
+</html>

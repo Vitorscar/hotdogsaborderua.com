@@ -1,0 +1,381 @@
+:root {
+  --red: #c4161c;
+  --red-d: #8e0e13;
+  --yel: #ffc81e;
+  --yel-d: #e6a800;
+  --bg: #16161a;
+  --card: #1f1f25;
+  --txt: #f5f5f5;
+  --mut: #b5b5bd;
+  --line: #3a3a44;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #16161a;
+    --card: #1f1f25;
+    --txt: #f5f5f5;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #16161a;
+  --card: #1f1f25;
+  --txt: #f5f5f5;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font: 15px/1.4 Poppins, system-ui, sans-serif;
+  padding-bottom: 110px;
+}
+
+.brush {
+  font-family: 'Caveat Brush', 'Segoe Script', cursive;
+}
+
+header {
+  background: radial-gradient(circle at 20% 0, #e02b2b, var(--red) 40%, var(--red-d));
+  text-align: center;
+  padding: 22px 16px 34px;
+  border-bottom: 4px solid var(--yel);
+}
+
+.logo {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 8px;
+  border-radius: 50%;
+  background: radial-gradient(#ffd54a, #f08a00);
+  border: 5px solid #5a2a12;
+  box-shadow: 0 0 0 3px var(--yel);
+  display: grid;
+  place-items: center;
+  font-size: 56px;
+}
+
+h1 {
+  font-size: 34px;
+  color: #fff;
+  line-height: 1;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.sub {
+  color: var(--yel);
+  font-style: italic;
+  font-size: 18px;
+  margin-top: 4px;
+}
+
+.tag {
+  color: #fff;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.title {
+  display: table;
+  margin: -18px auto 14px;
+  background: var(--yel);
+  color: #1a1a1a;
+  font-size: 40px;
+  padding: 0 34px;
+  transform: rotate(-2deg);
+  border-radius: 6px;
+  position: relative;
+  box-shadow: 0 4px 0 var(--yel-d);
+}
+
+main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 14px;
+}
+
+.item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.item .info {
+  flex: 1;
+}
+
+.item h2 {
+  display: inline-block;
+  background: var(--yel);
+  color: #1a1a1a;
+  font-size: 25px;
+  padding: 0 12px;
+  border-radius: 4px;
+  transform: rotate(-1.5deg);
+  margin-bottom: 6px;
+}
+
+.item p {
+  color: var(--mut);
+  font-size: 13px;
+}
+
+.price {
+  background: var(--yel);
+  color: #1a1a1a;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 6px 12px;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 18px;
+}
+
+.price small {
+  font-size: 12px;
+}
+
+.btn {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 16px;
+  background: var(--red);
+  color: #fff;
+}
+
+.btn.y {
+  background: var(--yel);
+  color: #1a1a1a;
+}
+
+.btn:active {
+  transform: scale(.97);
+}
+
+.item .right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.contact {
+  text-align: center;
+  color: var(--mut);
+  font-size: 13px;
+  margin-top: 20px;
+}
+
+.fab {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  max-width: 616px;
+  margin: auto;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--yel);
+  color: #1a1a1a;
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font: 700 16px Poppins, sans-serif;
+  box-shadow: 0 6px 20px #000a;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.fab.on {
+  display: flex;
+}
+
+.ov {
+  position: fixed;
+  inset: 0;
+  background: #000b;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 10;
+}
+
+.ov.on {
+  display: flex;
+}
+
+.sheet {
+  background: var(--bg);
+  width: 100%;
+  max-width: 640px;
+  max-height: 92vh;
+  overflow-y: auto;
+  border-radius: 20px 20px 0 0;
+  padding: 18px 16px calc(18px + env(safe-area-inset-bottom, 0px));
+  border-top: 4px solid var(--yel);
+}
+
+.sheet h3 {
+  font-size: 30px;
+  color: var(--yel);
+}
+
+.sheet h4 {
+  margin: 16px 0 8px;
+  font-size: 14px;
+  color: var(--yel);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  color: var(--txt);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font: 13px Poppins, sans-serif;
+  cursor: pointer;
+}
+
+.chip.off {
+  text-decoration: line-through;
+  color: var(--mut);
+  border-color: var(--red);
+  background: #3a1013;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.row small {
+  color: var(--mut);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--yel);
+  color: #1a1a1a;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.step span {
+  min-width: 18px;
+  text-align: center;
+  font-weight: 600;
+}
+
+textarea, input, select {
+  width: 100%;
+  background: var(--card);
+  color: var(--txt);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px;
+  font: inherit;
+  margin-top: 6px;
+}
+
+.hint {
+  color: var(--mut);
+  font-size: 12px;
+}
+
+.close {
+  float: right;
+  background: none;
+  border: 0;
+  color: var(--mut);
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.line {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.line .t {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.line .d {
+  color: var(--mut);
+  font-size: 12px;
+  margin: 2px 0 6px;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 14px 0;
+}
+
+.wa {
+  width: 100%;
+  background: #25d366;
+  color: #04210f;
+  font-size: 16px;
+  padding: 14px;
+}
+
+.seg {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.seg button {
+  flex: 1;
+}
+
+.seg .btn:not(.y) {
+  background: var(--card);
+  border: 1px solid var(--line);
+}
