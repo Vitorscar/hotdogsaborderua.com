@@ -4,6 +4,9 @@
 // ==========================================
 const WHATS = '5573981904834';
 
+// ==========================================
+// ADICIONAIS (valem para dogs e batatas)
+// ==========================================
 const EXTRAS = [
   {id:'sal', nome:'Salsicha', p:2},
   {id:'mil', nome:'Milho e ervilha', p:1},
@@ -13,12 +16,57 @@ const EXTRAS = [
   {id:'ched', nome:'Cheddar', p:1}
 ];
 
+// ==========================================
+// SEÇÕES DO CARDÁPIO
+// ==========================================
+const CATEGORIAS = [
+  {id:'dog',    nome:'Hot Dogs'},
+  {id:'batata', nome:'Batata Recheada'},
+  {id:'bebida', nome:'Bebidas'}
+];
+
+// Opção de borda usada nas batatas recheadas
+const BORDA = {id:'borda', nome:'Borda', opts:['Cheddar', 'Requeijão cremoso']};
+
+// ==========================================
+// ITENS DO CARDÁPIO
+// ==========================================
 const ITEMS = [
-  {id:'trad', nome:'Tradicional', p:12, ing:['Salsicha','Purê de batata','Milho','Ervilha','Cenoura','Beterraba','Uvas passas','Queijo ralado','Batata palha']},
-  {id:'simp', nome:'Simples', p:10, ing:['Salsicha','Milho','Ervilha','Purê de batata','Batata palha']},
-  {id:'cari', nome:'Estilo carioca', p:18, ing:['Salsicha','Ovos de codorna','Queijo mussarela','Presunto','Purê de batata','Vinagrete','Uvas passas','Batata palha']},
-  {id:'dogao', nome:'Dogão no prato', p:22, ing:['2 salsichas','Bacon','Calabresa em rodelas','Milho','Ervilha','Uvas passas','Repolho','Purê de batata','Queijo parmesão','Batata palha','Cheddar']},
-  {id:'kafta', nome:'Dogkafta', p:18, ing:['Kafta c/ queijo','Purê de batata','Milho','Ervilha','Vinagrete','Queijo parmesão','Batata palha']}
+  // ---------- HOT DOGS ----------
+  {id:'trad', cat:'dog', nome:'Tradicional', p:12, ing:['Salsicha','Purê de batata','Milho','Ervilha','Cenoura','Beterraba','Uvas passas','Queijo ralado','Batata palha']},
+  {id:'simp', cat:'dog', nome:'Simples', p:10, ing:['Salsicha','Milho','Ervilha','Purê de batata','Batata palha']},
+  {id:'cari', cat:'dog', nome:'Estilo carioca', p:18, ing:['Salsicha','Ovos de codorna','Queijo mussarela','Presunto','Purê de batata','Vinagrete','Uvas passas','Batata palha']},
+  {id:'dogao', cat:'dog', nome:'Dogão no prato', p:22, ing:['2 salsichas','Bacon','Calabresa em rodelas','Milho','Ervilha','Uvas passas','Repolho','Purê de batata','Queijo parmesão','Batata palha','Cheddar']},
+  {id:'kafta', cat:'dog', nome:'Dogkafta', p:18, ing:['Kafta c/ queijo','Purê de batata','Milho','Ervilha','Vinagrete','Queijo parmesão','Batata palha']},
+
+  // ---------- BATATAS RECHEADAS (500g) ----------
+  {
+    id:'bat-hot', cat:'batata', nome:'Hot Dog', p:15,
+    desc:'Batata temperada com margarina e sal, salsinhas em rodelas ao creme de leite, milho, finalizada com queijo mussarela e cheddar. Acompanha batata palha. (500g)',
+    ing:['Salsinha','Creme de leite','Milho','Queijo mussarela','Cheddar','Batata palha']
+  },
+  {
+    id:'bat-calabresa', cat:'batata', nome:'Calabresa Turbinada', p:19,
+    desc:'Batata temperada com margarina e sal, calabresa em cubos ao molho de queijo mussarela, finalizada com mais queijo mussarela e borda da sua escolha. Acompanha batata palha. (500g)',
+    ing:['Calabresa','Molho de queijo','Queijo mussarela','Batata palha'],
+    choices:[BORDA]
+  },
+  {
+    id:'bat-strog', cat:'batata', nome:'Strogonoff Supremo', p:24,
+    desc:'Batata temperada com manteiga e sal, strogonoff de frango cremoso, finalizada com queijo mussarela e borda da sua escolha. Acompanha batata palha. (500g)',
+    ing:['Strogonoff de frango','Queijo mussarela','Batata palha'],
+    choices:[BORDA]
+  },
+  {
+    id:'bat-rustica', cat:'batata', nome:'Rústica de Carne', p:26,
+    desc:'Batata temperada com margarina e sal, recheada com nossa deliciosa carne desfiada suculenta, finalizada com mussarela e borda da sua escolha. Acompanha batata palha. (500g)',
+    ing:['Carne desfiada','Queijo mussarela','Batata palha'],
+    choices:[BORDA]
+  },
+
+  // ---------- BEBIDAS ----------
+  {id:'coca', cat:'bebida', nome:'Coca-Cola Lata', p:6.5, desc:'Lata 350 ml, bem gelada.', ing:[]},
+  {id:'coca0', cat:'bebida', nome:'Coca-Cola Lata sem Açúcar', p:6, desc:'Lata 350 ml, bem gelada.', ing:[]}
 ];
 
 const $ = id => document.getElementById(id);
@@ -31,53 +79,93 @@ const unit = l => l.item.p + EXTRAS.reduce((s, e) => s + e.p * (l.extras[e.id] |
 const total = () => cart.reduce((s, l) => s + unit(l) * l.qty, 0);
 const count = () => cart.reduce((s, l) => s + l.qty, 0);
 
-// Renderiza o menu inicial na tela
-$('menu').innerHTML = ITEMS.map(i => `
-  <div class="item">
-    <div class="info">
-      <h2 class="brush">${i.nome}</h2>
-      <p>Pão, ${i.ing.join(', ').toLowerCase()}.</p>
-    </div>
-    <div class="right">
-      <div class="price"><small>R$</small> ${i.p.toFixed(2).replace('.', ',')}</div>
-      <button class="btn" data-add="${i.id}">Pedir</button>
-    </div>
-  </div>`).join('');
+// ==========================================
+// RENDERIZA O CARDÁPIO (com as seções)
+// ==========================================
+function renderMenu() {
+  $('menu').innerHTML = CATEGORIAS.map(cat => {
+    const list = ITEMS.filter(i => i.cat === cat.id);
+    if (!list.length) return '';
+
+    return `
+      <div class="title brush" style="font-size:26px;margin:20px 0 10px">${cat.nome}</div>
+      ${list.map(i => {
+        const descricao = i.desc ? i.desc : `Pão, ${i.ing.join(', ').toLowerCase()}.`;
+        return `
+        <div class="item">
+          <div class="info">
+            <h2 class="brush">${esc(i.nome)}</h2>
+            <p>${esc(descricao)}</p>
+          </div>
+          <div class="right">
+            <div class="price"><small>R$</small> ${i.p.toFixed(2).replace('.', ',')}</div>
+            <button class="btn" data-add="${i.id}">Pedir</button>
+          </div>
+        </div>`;
+      }).join('')}
+    `;
+  }).join('');
+}
+renderMenu();
 
 // Evento de clique nos botões "Pedir"
 $('menu').onclick = e => {
   const id = e.target.dataset.add;
   if (!id) return;
-  cur = {item: ITEMS.find(i => i.id === id), removed: [], extras: {}, obs: '', qty: 1};
+
+  const item = ITEMS.find(i => i.id === id);
+  cur = {item, removed: [], extras: {}, choices: {}, obs: '', qty: 1};
+
+  // já deixa a primeira opção de escolha marcada (ex.: borda Cheddar)
+  (item.choices || []).forEach(ch => { cur.choices[ch.id] = ch.opts[0]; });
+
   renderItem();
   $('ovItem').classList.add('on');
 };
 
-// Renderiza a janela de detalhes do item
+// ==========================================
+// JANELA DE DETALHES DO ITEM
+// ==========================================
 function renderItem() {
   const c = cur;
+  const temIngredientes = c.item.ing && c.item.ing.length > 0;
+  const ehBebida = c.item.cat === 'bebida';
+  const escolhas = c.item.choices || [];
+
   $('sheetItem').innerHTML = `
     <button class="close" data-x="item">×</button>
-    <h3 class="brush">${c.item.nome}</h3>
-    <h4>Retirar ingredientes</h4>
-    <div class="chips">
-      ${c.item.ing.map((g, k) => `<button class="chip ${c.removed.includes(g) ? 'off' : ''}" data-rm="${k}">${g}</button>`).join('')}
-    </div>
-    <p class="hint" style="margin-top:6px">Toque para retirar (sem custo).</p>
+    <h3 class="brush">${esc(c.item.nome)}</h3>
+    ${c.item.desc ? `<p class="hint" style="margin:0 0 8px">${esc(c.item.desc)}</p>` : ''}
 
-    <h4>Adicionais</h4>
-    ${EXTRAS.map(x => `
-      <div class="row">
-        <div>${x.nome}<br><small>+ ${brl(x.p)}</small></div>
-        <div class="step">
-          <button data-ex="${x.id}" data-d="-1">−</button>
-          <span>${c.extras[x.id] || 0}</span>
-          <button data-ex="${x.id}" data-d="1">+</button>
-        </div>
+    ${temIngredientes ? `
+      <h4>Retirar ingredientes</h4>
+      <div class="chips">
+        ${c.item.ing.map((g, k) => `<button class="chip ${c.removed.includes(g) ? 'off' : ''}" data-rm="${k}">${esc(g)}</button>`).join('')}
+      </div>
+      <p class="hint" style="margin-top:6px">Toque para retirar (sem custo).</p>
+    ` : ''}
+
+    ${escolhas.map(ch => `
+      <h4>${esc(ch.nome)}</h4>
+      <div class="chips">
+        ${ch.opts.map(o => `<button class="chip ${c.choices[ch.id] === o ? '' : 'off'}" data-ch="${ch.id}" data-opt="${esc(o)}">${esc(o)}</button>`).join('')}
       </div>`).join('')}
 
+    ${ehBebida ? '' : `
+      <h4>Adicionais</h4>
+      ${EXTRAS.map(x => `
+        <div class="row">
+          <div>${esc(x.nome)}<br><small>+ ${brl(x.p)}</small></div>
+          <div class="step">
+            <button data-ex="${x.id}" data-d="-1">−</button>
+            <span>${c.extras[x.id] || 0}</span>
+            <button data-ex="${x.id}" data-d="1">+</button>
+          </div>
+        </div>`).join('')}
+    `}
+
     <h4>Observações</h4>
-    <textarea id="obs" rows="2" placeholder="Ex.: sem pimenta, bem passado...">${esc(c.obs)}</textarea>
+    <textarea id="obs" rows="2" placeholder="Ex.: sem cebola, bem passado...">${esc(c.obs)}</textarea>
 
     <div class="row" style="border:0;margin-top:10px">
       <b>Quantidade</b>
@@ -106,6 +194,8 @@ $('sheetItem').onclick = e => {
     k < 0 ? cur.removed.push(g) : cur.removed.splice(k, 1);
   } else if (d.ex) {
     cur.extras[d.ex] = Math.max(0, (cur.extras[d.ex] || 0) + +d.d);
+  } else if (d.ch) {
+    cur.choices[d.ch] = d.opt;
   } else if (d.q) {
     cur.qty = Math.max(1, cur.qty + +d.q);
   } else if (d.save !== undefined) {
@@ -131,10 +221,18 @@ function upd() {
 
 function lineDesc(l) {
   const p = [];
+
+  (l.item.choices || []).forEach(ch => {
+    if (l.choices && l.choices[ch.id]) p.push(`${ch.nome}: ${l.choices[ch.id]}`);
+  });
+
   if (l.removed.length) p.push('Sem: ' + l.removed.join(', '));
+
   const ex = EXTRAS.filter(x => l.extras[x.id]).map(x => `${l.extras[x.id]}x ${x.nome}`);
   if (ex.length) p.push('Extra: ' + ex.join(', '));
+
   if (l.obs.trim()) p.push('Obs: ' + l.obs.trim());
+
   return p;
 }
 
@@ -179,7 +277,9 @@ function onCEP(input) {
   if (digits.length === 8) buscaCEP(digits);
 }
 
-// Renderiza o carrinho de compras
+// ==========================================
+// RENDERIZA O CARRINHO
+// ==========================================
 function renderCart() {
   if (!cart.length) {
     $('ovCart').classList.remove('on');
@@ -212,7 +312,7 @@ function renderCart() {
     </button>
 
     <div class="t" style="padding-right:90px">
-      <span>${l.qty}x ${l.item.nome}</span>
+      <span>${l.qty}x ${esc(l.item.nome)}</span>
       <span>${brl(unit(l) * l.qty)}</span>
     </div>
     <div class="d">${lineDesc(l).map(esc).join('<br>')}</div>
