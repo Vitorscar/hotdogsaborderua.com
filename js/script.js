@@ -163,9 +163,10 @@ function renderItem() {
           </div>
         </div>`).join('')}
     `}
-
-    <h4>Observações</h4>
-    <textarea id="obs" rows="2" placeholder="Ex.: sem cebola, bem passado...">${esc(c.obs)}</textarea>
+        ${ehBebida ? '' : `
+      <h4>Observações</h4>
+      <textarea id="obs" rows="2" placeholder="Ex.: sem cebola, bem passado...">${esc(c.obs)}</textarea>
+    `}
 
     <div class="row" style="border:0;margin-top:10px">
       <b>Quantidade</b>
